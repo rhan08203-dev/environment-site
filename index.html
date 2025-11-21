@@ -1,65 +1,703 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>环保之家</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f8f5;
-      color: #333;
-      text-align: center;
-    }
-    header {
-      background: url('environment.jpg') center/cover no-repeat;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 3em;
-      font-weight: bold;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
-    }
-    nav {
-      background-color: #2e8b57;
-      display: flex;
-      justify-content: center;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 15px 30px;
-      font-size: 1.1em;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background-color: #3cb371;
-    }
-    footer {
-      background-color: #2e8b57;
-      color: white;
-      padding: 10px;
-      margin-top: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>噵海 Deep Ocean | 行动派环保社团</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#10B981', // 鲜活的叶绿
+                            dark: '#064E3B',  // 森林深绿
+                            blue: '#0EA5E9',  // 清澈的海洋蓝
+                            light: '#ECFDF5', // 极淡的薄荷绿背景
+                            sand: '#F5F5F4',  // 温暖的沙土色
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                        display: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 柔和的渐变背景 */
+        .hero-bg {
+            background: linear-gradient(135deg, #ECFDF5 0%, #F0F9FF 100%);
+            position: relative;
+        }
+        
+        /* 有机形状装饰 */
+        .organic-blob {
+            position: absolute;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(60px);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* 卡片悬浮效果 */
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+        }
+
+        /* 强调 DO */
+        .brand-do-text span.d { color: #10B981; } /* Green D */
+        .brand-do-text span.o { color: #0EA5E9; } /* Blue O */
+        
+        /* 导航栏磨砂效果 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        /* 演讲稿截断效果 */
+        .line-clamp-4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 自定义模态框动画 */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 200ms, transform 200ms;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    环保之家
-  </header>
+<body class="bg-brand-sand/30 text-gray-700 font-sans antialiased">
 
-  <nav>
-    <a href="news.html">环保即时新闻</a>
-    <a href="achievements.html">我们的成果</a>
-    <a href="thoughts.html">环保的思考</a>
-    <a href="support.html">商品与支持</a>
-  </nav>
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 top-0 left-0 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 font-display font-black text-2xl tracking-tight cursor-pointer" onclick="window.scrollTo(0,0)">
+                <span class="text-brand-green text-4xl">D</span><span class="text-brand-blue text-4xl">O</span>
+                <div class="flex flex-col leading-none ml-1 text-gray-600 text-xs font-bold tracking-widest uppercase">
+                    <span>Deep</span>
+                    <span>Ocean</span>
+                </div>
+            </div>
 
-  <footer>
-    © 2025 环保之家 | 共创绿色未来
-  </footer>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 font-medium text-gray-600">
+                <a href="#mvvs" class="hover:text-brand-green transition relative group">
+                    社团精神
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#knowledge" class="hover:text-brand-green transition relative group">
+                    环保知识
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="https://rhan08203-dev.github.io/environmental-protection/" target="_blank" class="hover:text-brand-green transition flex items-center gap-1">
+                    环保计算 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <a href="#about" class="hover:text-brand-green transition relative group">
+                    关于我们
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#transparency" class="hover:text-brand-green transition relative group">
+                    资助与公示
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-600 text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="organic-blob bg-green-300 w-96 h-96 top-0 left-0 animate-pulse"></div>
+        <div class="organic-blob bg-blue-300 w-80 h-80 bottom-0 right-0 animate-pulse" style="animation-delay: 2s"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-block px-4 py-1 mb-6 rounded-full bg-white border border-green-200 text-brand-green text-sm font-bold tracking-wider shadow-sm">
+                🌱 WE ACT FOR NATURE
+            </div>
+            
+            <!-- 标语 -->
+            <h1 class="font-display text-5xl md:text-7xl font-black text-gray-800 mb-6 leading-tight">
+                We <span class="text-brand-green">Act</span>.<br>
+                We <span class="text-brand-blue">Protect</span>.
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto mb-12 font-light">
+                噵海 Deep Ocean 社团<br>
+                <span class="text-base mt-2 block">不仅是深邃的海洋，更是脚踏实地的行动。</span>
+            </p>
+
+            <!-- 四大入口卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- 1 -->
+                <a href="#knowledge" class="bg-white p-8 rounded-2xl shadow-lg hover-card flex flex-col items-center text-center border-b-4 border-brand-green">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-brand-green text-2xl mb-4">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">环保知识</h3>
+                    <p class="text-sm text-gray-400 mt-2">垃圾分类、生态科普与前沿资讯</p>
+                </a>
+                
+                <!-- 2 -->
+                <a href="https://rhan08203-dev.github.io/environmental-protection/" target="_blank" class="bg-white p-8 rounded-2xl shadow-lg hover-card flex flex-col items-center text-center border-b-4 border-brand-blue">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-brand-blue text-2xl mb-4">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">环保计算</h3>
+                    <p class="text-sm text-gray-400 mt-2">量化你的环保贡献，让改变看得见</p>
+                </a>
+
+                <!-- 3 -->
+                <a href="#about" class="bg-white p-8 rounded-2xl shadow-lg hover-card flex flex-col items-center text-center border-b-4 border-yellow-400">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-2xl mb-4">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">关于我们</h3>
+                    <p class="text-sm text-gray-400 mt-2">一群热爱自然、从身边做起的行动者</p>
+                </a>
+
+                <!-- 4 -->
+                <a href="#transparency" class="bg-white p-8 rounded-2xl shadow-lg hover-card flex flex-col items-center text-center border-b-4 border-purple-400">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-2xl mb-4">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">资助与公开</h3>
+                    <p class="text-sm text-gray-400 mt-2">每一笔收支都透明，每一分钱都为了地球</p>
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 w-full text-center text-gray-400 animate-bounce">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <!-- MVVS: 社团精神板块 -->
+    <section id="mvvs" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-12">
+                <span class="text-brand-blue font-bold tracking-wider text-sm uppercase">Our DNA</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">我们的精神</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 使命 -->
+                <div class="p-6 bg-brand-light rounded-xl border border-green-100 hover-card">
+                    <div class="text-brand-green text-3xl mb-4"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">使命 Mission</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        通过改变环保意识，改变社区环境，形成可持续的生命家园。
+                    </p>
+                </div>
+                
+                <!-- 愿景 -->
+                <div class="p-6 bg-blue-50 rounded-xl border border-blue-100 hover-card">
+                    <div class="text-brand-blue text-3xl mb-4"><i class="fa-solid fa-eye"></i></div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">愿景 Vision</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        让绿色生活在贞元学校如其所是的呈现。
+                    </p>
+                </div>
+
+                <!-- 价值观 -->
+                <div class="p-6 bg-yellow-50 rounded-xl border border-yellow-100 hover-card">
+                    <div class="text-yellow-500 text-3xl mb-4"><i class="fa-solid fa-heart"></i></div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">价值观 Values</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        相信理性之光，可成万物之美。相信每一步微小的行动终将汇聚成改变世界的力量。
+                    </p>
+                </div>
+
+                <!-- 行动 -->
+                <div class="p-6 bg-purple-50 rounded-xl border border-purple-100 hover-card">
+                    <div class="text-purple-500 text-3xl mb-4"><i class="fa-solid fa-person-running"></i></div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">行动 Action</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        多学科融合，举办演讲，宣传和艺术展。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 环保知识 -->
+    <section id="knowledge" class="py-20 px-6 bg-gray-50">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <span class="text-brand-green font-bold tracking-wider text-sm uppercase">Knowledge & Speech</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">思想与见解</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 文章 1: 重点推荐演讲 - 已添加点击事件 -->
+                <div onclick="openSpeechModal()" class="lg:col-span-2 bg-white p-8 rounded-2xl shadow-sm border-l-8 border-brand-green group cursor-pointer hover:shadow-md transition transform active:scale-95">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 text-xl">
+                                <i class="fa-solid fa-flag"></i> <!-- 国旗下演讲 Icon -->
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500 font-bold uppercase">第一篇演讲</div>
+                                <div class="text-xs text-gray-400">2025.11.20</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-brand-green transition">如何理解环保与在校园中实践环保</h3>
+                    <div class="prose prose-gray text-gray-600 mb-6 line-clamp-4">
+                        随着科技的进步，环保问题日益触目。但是说起环保问题，我原来想到的也成了，环保话题如此宏达，而我，“位卑言轻”，又能做些什么呢？再者，就算我能改变一些生活中的行为习惯，我又为什么要这么做？...
+                        <br><br>
+                        我们当然不认为这些大项目是无意义的，但往往油然而生的感觉便是，这样的大项目和我们每一个个体是无关的...
+                    </div>
+                    <div class="text-brand-blue font-bold text-sm flex items-center">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-2 transition"></i>
+                    </div>
+                </div>
+
+                <!-- 投稿位 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-dashed border-gray-300 flex flex-col items-center justify-center text-center h-full min-h-[200px] group hover:border-brand-blue transition">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 text-2xl mb-4 group-hover:bg-blue-50 group-hover:text-brand-blue transition">
+                        <i class="fa-regular fa-paper-plane"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">期待你的投稿</h3>
+                    <p class="text-sm text-gray-500 px-4">你的思考，值得被看见。<br>环保、生态、可持续生活... <br>我们在这里等你。</p>
+                </div>
+
+                <!-- 投稿位 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-dashed border-gray-300 flex flex-col items-center justify-center text-center h-full min-h-[200px] group hover:border-brand-blue transition">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 text-2xl mb-4 group-hover:bg-blue-50 group-hover:text-brand-blue transition">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">期待你的投稿</h3>
+                    <p class="text-sm text-gray-500 px-4">不仅有展示的机会，<br>还有 5元 稿费激励哦！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 演讲全文模态框 -->
+    <div id="speechModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- 背景遮罩 -->
+            <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeSpeechModal()"></div>
+    
+            <!-- 模态框面板 -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full relative">
+                
+                <!-- 关闭按钮 -->
+                <button onclick="closeSpeechModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+    
+                <div class="bg-white px-8 py-8 md:px-10 md:py-10">
+                    <!-- 模态框内容 -->
+                    <div class="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600">
+                            <i class="fa-solid fa-flag"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">如何理解环保与在校园中实践环保</h3>
+                            <span class="text-sm text-gray-500">第一篇演讲 | 2025.11.20</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 演讲全文 -->
+                    <div class="prose prose-lg text-gray-700 max-w-none max-h-[60vh] overflow-y-auto pr-4">
+                        <p class="mb-4">随着科技的进步，环保问题日益触目。但是说起环保问题，我原来想到的也成了，环保话题如此宏达，而我，“位卑言轻”，又能做些什么呢？再者，就算我能改变一些生活中的行为习惯，我又为什么要这么做？为什么让我来当这“第一个人”？当然，此时此刻我已不再被这些问题所困扰，所以我将分享我自己到底是如何改变对这些问题的看法的，并基于此简单介绍一下我们的社团项目。</p>
+
+                        <p class="mb-4">环保是个大项目，而我们的生活中充满了这样的大项目。就不说什么为了更美好的地球和人类而奋斗，我们在大街上看到的“建设法治中国”的宣传标语，建立美好校园并尝试民主生活，甚至，构建良好的班级生活，上好一堂课都可以认为是尺度不同的大项目。</p>
+
+                        <p class="mb-4">我们当然不认为这些大项目是无意义的，但往往油然而生的感觉便是，这样的大项目和我们每一个个体是无关的，这是集体的职责，这是更大的人物应该去思考解决的问题，我啥也干不了。但是想到这里我不禁问自己，“真正的”大项目果真如此吗？仍然以民主为例，我们都希望民主，至少应该没人希望有人可以骑在别人头上当皇帝，但是一谈到有关民主问题，至少原来我自己马上想到的又都变成了，现实世界上各个国家的民主都这德行，我又能做什么？这也许是某种现实，但是也正是这样的想法造就了各国民主的发展道阻且长，因为民主的实质就是集体中的每个人愿意为了自己的想法和利益而发声，为自己做主。</p>
+
+                        <p class="mb-4">在我们的日常生活中，一节课，一个教室又何尝不是这样？如果不是，那老师也不需要备课了，学生也可以一直跑神了，所有人都觉得课堂与自己无关。如此观之，如果我们认为一节课能不能良好的进行，一个教室能不能良好的运转和每个在其中的人都息息相关，那为什么在遇到环保，民主问题时就谈虎色变，认为自己什么都做不了了呢？只是因为牵扯的人更多吗？所以，正是每一个个体才造就了真正的大项目，而不是什么其他诡异的宏大叙事。反过来，不以个体为基础的大项目必须调整，否则必然寸步难行。这也是为什么很多非洲小国的民主选举居然产生了军政府。</p>
+
+                        <p class="mb-4">在有了这样的思考之后，反观环保问题，我仍认为社会和政府存在着巨大的问题，不管是环保意识无法向公众合理普及，还是有环保政策不去落实，甚至根本就没有环保政策，但是我也不认为我们要等着联合国一纸文件下来勒令国家整改环保问题，最后政府找到头上才能让环保进行下去。况且联合国里还有老美呢，特朗普大统领保不齐也不会让联合国通过这样的文件，这样他支持的石油产业才能继续发展下去。如此观之，环保难道就不进行了吗？所以我们要组织环保社团，这当然也是大项目，但这绝对不是宏大却空洞的，而是切实且与每个具体的人链接的。</p>
+
+                        <p class="mb-4">可是，就算认为环保和每个人都息息相关，为什么我又要做在校园中践行环保生活的第一个人？我想这是因为我们的学校文化很重要的部分就是“做第一”。诚然，学校不会说希望每个学生都考第一，更不会说要让学生在开封市的统考里均分考第一，高考全都当状元。但是，如果我们不在另一些事情上当“第一”，那我们的学校不就成了堕落人员聚集地了吗？而那些我们希望做第一的事情，正是那些看起来没有名誉，奖励，但是有价值的事情的“第一”。而此处的第一也就不仅仅是效果第一，客观化的第一了。从大来说，我们当然有客观化的第一，比如我们的学校的成立本身就是改变中国传统教育模式的第一。而从小来说，我们也在一节课上积极的回答问题，老师们积极地进行课堂，不断挑战成为自己的第一。所以，如果我们认为环保是重要的，是有价值的，那就让我们一起携手成为在我们学校实践环保的第一吧！</p>
+
+                        <p class="mb-4">说了上面一堆理论“空话”，就让我简单介绍一下我们的项目吧。我们决定最先开展的项目是回收废纸，废塑料和废金属，我们暂时计划在每个教室和办公室提供垃圾回收点，让环保深入生活，也减少参与环保的时间成本。接下来，我们会找绿色环保机构处理这些垃圾，在回收到废品后我们虽然会赚钱，但是我也希望我们的行为是以公益为基础的，所以我们赚到的钱一部分会用于激励大家持续进行环保，另一部分用于支付投稿的有关环保的宣传文章的稿费。最后一点，环保也需要资金支持，所以我们会面向全校开展募捐：学生、家长、老师都可以参与，我们会在校门口的海报上放二维码，也欢迎现金捐款。当然，我们保证我们会公开在任何放方面的每一笔支出和收入，方便大家监督。同时，如果你还想了解更多以上任何方面的详细信息，欢迎去学校北门口看看我们海报上的具体信息。</p>
+
+                        <p class="mb-4 font-bold text-brand-green">最后，我想起了我在网上看到的一组图：</p>
+                        <p class="mb-4 italic text-gray-500 border-l-4 border-gray-300 pl-4">两张一模一样的地球照片，上面写着“有你时地球的样子”和“没有你时地球的样子”。原意是：有你没你，地球都一样。但也有人带入了时间的维度，给了一个新的解读：“没有你的地球，只会一成不变。”</p>
+                        <p class="mb-4">我不知道这句话放在地球的尺度上是否成立，但我认为在校园里绝对是这样，因为没有“每一个你”，校园只能维持原样，没有新的变化！所以，欢迎你加入我们的环保行动，让校园因为你的存在而变得不一样！我的演讲到此结束，谢谢大家。</p>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <button type="button" onclick="closeSpeechModal()" class="inline-flex justify-center rounded-full border border-transparent shadow-sm px-8 py-3 bg-brand-green text-base font-medium text-white hover:bg-brand-dark focus:outline-none transition sm:text-sm">
+                            关闭阅读
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-20 bg-white relative">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16">
+                <span class="text-brand-blue font-bold tracking-wider text-sm uppercase">About Us</span>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2 mb-6">关于我们</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    “DO”代表行动。我们是 <strong class="text-brand-green">噵海 Deep Ocean 社团</strong>。
+                </p>
+            </div>
+
+            <!-- 这个网站能为你做什么 -->
+            <div class="bg-brand-light rounded-3xl p-8 md:p-12 mb-16 border border-green-100">
+                <h3 class="text-2xl font-bold text-brand-dark mb-8 text-center">这个网站能为你做什么？</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-brand-green text-xl mb-3"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <h4 class="font-bold text-lg mb-2">环保知识库</h4>
+                        <p class="text-sm text-gray-600">整理涵盖垃圾分类、生物多样性、可持续生活等领域的科普文章，以及合作伙伴信息。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-brand-blue text-xl mb-3"><i class="fa-solid fa-calculator"></i></div>
+                        <h4 class="font-bold text-lg mb-2">环保计算器</h4>
+                        <p class="text-sm text-gray-600">拒绝抽象！轻松计算你回收的垃圾给周边环境和地球带来的具体意义。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="text-yellow-500 text-xl mb-3"><i class="fa-solid fa-trophy"></i></div>
+                        <h4 class="font-bold text-lg mb-2">积分排行</h4>
+                        <p class="text-sm text-gray-600">计算每个月不同班级、办公室的环保积分并提供排行，让环保成为一种集体荣誉。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 背后的我们 (成员介绍) - 预留图片位置 -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold text-center mb-10">背后的我们</h3>
+                <!-- 
+                    提示：要替换照片，请把 img 标签里的 src 改成你本地照片的路径。
+                    例如：src="images/wanghan.jpg"
+                -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                    <!-- Member 1 -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden border-2 border-transparent group-hover:border-brand-green transition">
+                            <img src="images/wanghan.jpg" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=WangHan'" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-gray-800">王瀚 (社长)</h4>
+                        <p class="text-xs text-gray-500 mt-2 px-2">宅男一枚，喜欢自然之美，思考人在其中的位置。</p>
+                    </div>
+                    <!-- Member 2 -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden border-2 border-transparent group-hover:border-brand-green transition">
+                            <img src="images/luyanze.jpg" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=LuYanze'" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-gray-800">鲁延泽</h4>
+                        <p class="text-xs text-gray-500 mt-2 px-2">核心成员，行动力担当。</p>
+                    </div>
+                    <!-- Member 3 -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden border-2 border-transparent group-hover:border-brand-green transition">
+                            <img src="images/wangningrui.jpg" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=CatLover'" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-gray-800">王凝睿</h4>
+                        <p class="text-xs text-gray-500 mt-2 px-2">一只爱睡觉但热爱环保的猫。</p>
+                    </div>
+                    <!-- Member 4 -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden border-2 border-transparent group-hover:border-brand-green transition">
+                            <img src="images/shixingxing.jpg" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=TeacherShi'" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-gray-800">石星星老师</h4>
+                        <p class="text-xs text-gray-500 mt-2 px-2">指导老师</p>
+                    </div>
+                    <!-- Member 5 -->
+                    <div class="flex flex-col items-center group">
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden border-2 border-transparent group-hover:border-brand-green transition">
+                            <img src="images/junjie.jpg" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=TeacherJun'" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-gray-800">俊杰老师</h4>
+                        <p class="text-xs text-gray-500 mt-2 px-2">指导老师</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 加入与投稿 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 加入我们 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                    <h3 class="text-2xl font-bold mb-4 text-brand-dark flex items-center">
+                        <i class="fa-solid fa-hand-sparkles mr-3 text-brand-green"></i> 加入我们
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-6">一个人的力量有限，但一群人的力量无穷。我们诚挚地邀请你：</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-lg text-brand-green mr-3 text-xs"><i class="fa-solid fa-link"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800 text-sm">成为“联络者”</h5>
+                                <p class="text-xs text-gray-500 mt-1">每个班级的一位代表，负责传达信息并在社团内承担工作。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-lg text-brand-blue mr-3 text-xs"><i class="fa-solid fa-palette"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800 text-sm">成为志愿者</h5>
+                                <p class="text-xs text-gray-500 mt-1">如果你对内容创作、美术设计有兴趣，欢迎一起完善这个平台！</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-yellow-100 p-2 rounded-lg text-yellow-600 mr-3 text-xs"><i class="fa-solid fa-share-nodes"></i></div>
+                            <div>
+                                <h5 class="font-bold text-gray-800 text-sm">分享与反馈</h5>
+                                <p class="text-xs text-gray-500 mt-1">分享网站给更多人，并随时提出宝贵意见。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 成为投稿伙伴 -->
+                <div class="bg-brand-dark text-white p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full transform translate-x-10 -translate-y-10"></div>
+                    <h3 class="text-2xl font-bold mb-4 flex items-center">
+                        <i class="fa-solid fa-pen-nib mr-3"></i> 成为投稿伙伴
+                    </h3>
+                    <p class="text-sm text-gray-300 mb-4">
+                        我们欢迎任何关于环境保护、可持续生活、绿色科技、生态见闻等领域的原创文章、研究报告或深度思考。
+                    </p>
+                    
+                    <div class="bg-white/10 rounded-lg p-4 mb-4 border border-white/10">
+                        <div class="text-yellow-400 font-bold text-sm mb-1"><i class="fa-solid fa-coins mr-1"></i> 投稿激励</div>
+                        <p class="text-xs text-gray-300">文章审核通过并刊登，作者将获得 <strong>5 RMB</strong> 的象征性稿费，我们珍视每一份智慧产出。</p>
+                    </div>
+
+                    <div class="text-sm">
+                        <p class="font-bold mb-1">如何投稿：</p>
+                        <p class="text-gray-300 text-xs mb-2">发送至：<a href="mailto:2396653945@qq.com" class="text-brand-green underline">2396653945@qq.com</a></p>
+                        <p class="text-gray-400 text-xs">邮件标题注明投稿内容、简短作者简介和联系方式（姓名、班级、电话/邮箱）。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资助与公开信息 (已更新最新财务数据) -->
+    <section id="transparency" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col md:flex-row gap-12">
+                
+                <!-- 左侧：财务公示 -->
+                <div class="w-full md:w-2/3">
+                    <div class="flex items-center gap-3 mb-6">
+                        <h2 class="text-3xl font-bold text-gray-800">公开信息</h2>
+                        <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">更新于 2025/11/20</span>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                            
+                            <!-- 收入板块 (已更新) -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-brand-dark mb-4 flex items-center">
+                                    <i class="fa-solid fa-circle-plus text-green-500 mr-2 text-sm"></i> 收入信息
+                                </h3>
+                                <ul class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">吴雨桐</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-green-600">+24元</span>
+                                            <span class="text-xs text-gray-400">2025/11/17</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">付秦豫</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-green-600">+20元</span>
+                                            <span class="text-xs text-gray-400">2025/11/17</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">康缈</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-green-600">+160元</span>
+                                            <span class="text-xs text-gray-400">2025/11/17</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">*景</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-green-600">+10元</span>
+                                            <span class="text-xs text-gray-400">2025/11/18</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">*L</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-green-600">+199元</span>
+                                            <span class="text-xs text-gray-400">2025/11/19</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 支出板块 (已更新) -->
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-brand-dark mb-4 flex items-center">
+                                    <i class="fa-solid fa-circle-minus text-red-500 mr-2 text-sm"></i> 支出信息
+                                </h3>
+                                <ul class="space-y-3">
+                                    <li class="flex justify-between items-center text-sm border-b border-dashed border-gray-100 pb-2">
+                                        <span class="font-medium text-gray-700">打海报</span>
+                                        <div class="text-right">
+                                            <span class="block font-bold text-red-500">-160元</span>
+                                            <span class="text-xs text-gray-400">2025/11/17</span>
+                                        </div>
+                                    </li>
+                                    <!-- 占位符 -->
+                                    <li class="h-10 text-xs text-gray-400 flex items-center justify-center italic">暂无更多支出</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 垃圾回收统计 -->
+                        <div class="bg-brand-light p-6 border-t border-gray-100">
+                            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">我们本周回收的垃圾</h3>
+                            <div class="grid grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <i class="fa-solid fa-scroll text-gray-400 text-xl mb-2"></i>
+                                    <div class="text-sm text-gray-600">废纸</div>
+                                    <div class="font-bold text-gray-400">暂无</div>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-bottle-water text-gray-400 text-xl mb-2"></i>
+                                    <div class="text-sm text-gray-600">塑料瓶</div>
+                                    <div class="font-bold text-gray-400">暂无</div>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-can-food text-gray-400 text-xl mb-2"></i>
+                                    <div class="text-sm text-gray-600">金属</div>
+                                    <div class="font-bold text-gray-400">暂无</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：资助二维码 -->
+                <div class="w-full md:w-1/3">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">资助我们</h2>
+                    <div class="bg-[#09BB07] p-6 rounded-2xl shadow-lg text-center text-white">
+                        <p class="font-bold text-lg mb-4"><i class="fa-brands fa-weixin text-xl mr-1"></i> 推荐使用微信支付</p>
+                        <div class="bg-white p-2 rounded-lg inline-block mb-4">
+                            <!-- 
+                                重要：请在这里替换你的二维码图片！
+                                将 src="..." 改为你自己的图片路径
+                            -->
+                            <div class="w-48 h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-xs relative overflow-hidden">
+                                <!-- 占位符，实际使用时请换成 <img src="你的二维码.jpg"> -->
+                                <img src="images/qrcode.jpg" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=wxp://f2f0Y3o0X-sample'" alt="WeChat Pay QR" class="w-full h-full object-cover opacity-90">
+                            </div>
+                        </div>
+                        <p class="text-sm opacity-90">支持环保事业，感谢您的每一分心意</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <div class="font-display font-black text-2xl tracking-tight mb-4">
+                        <span class="text-brand-green">D</span><span class="text-brand-blue">O</span>
+                        <span class="text-sm font-normal text-gray-400 ml-2">Deep Ocean Society</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        致力于校园环保、生态科普与可持续生活方式的推广。<br>
+                        从身边小事做起，汇聚改变世界的力量。
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><i class="fa-solid fa-envelope w-6"></i> 1280729697@qq.com</li>
+                        <li><i class="fa-solid fa-location-dot w-6"></i> 噵海学院五楼橄榄树教室</li>
+                        <li><i class="fa-solid fa-paper-plane w-6"></i> 投稿: 2396653945@qq.com</li>
+                    </ul>
+                </div>
+
+                <div class="text-center md:text-right">
+                    <h4 class="font-bold text-lg mb-4">关注我们</h4>
+                    <div class="flex justify-center md:justify-end space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-green transition"><i class="fa-brands fa-weixin"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-green transition"><i class="fa-brands fa-weibo"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+                <p>&copy; 2025 噵海 Deep Ocean 社团. All Rights Reserved.</p>
+                <p class="mt-2 md:mt-0">Designed for Nature.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal Scripts -->
+    <script>
+        function openSpeechModal() {
+            const modal = document.getElementById('speechModal');
+            modal.classList.remove('hidden');
+            // 锁定背景滚动
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSpeechModal() {
+            const modal = document.getElementById('speechModal');
+            modal.classList.add('hidden');
+            // 恢复背景滚动
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 点击 ESC 键关闭
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeSpeechModal();
+            }
+        });
+    </script>
+
 </body>
 </html>
